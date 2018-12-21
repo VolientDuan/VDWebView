@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>测试WKWebView问题</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    </head>
+    <body>
+        <h2>JS调用OC方法</h2>
+        <h4 onclick="popView()">返回上一页</h4>
+        <h4 onclick="changeTitle()">更改导航title</h4>
+        <h4 onclick="reloadView()">reload页面</h4>
+        <h4 onclick="sendMessage()">给我一封私信</h4>
+        <h2>JS弹框显示问题</h2>
+        <h4 onclick="showAlert()">alert显示</h4>
+        <h4 onclick="showConfirm()">confirm显示</h4>
+        <h4 onclick="showPrompt()">prompt显示</h4>
+        <h2>注入JS脚本</h2>
+        <h4 onclick="injectJS()">这是我注入的JS</h4>
+    </body>
+    <script>
+        function popView() {
+            window.webkit.messageHandlers.popView.postMessage({method:"pop"})
+        }
+        function changeTitle() {
+            window.webkit.messageHandlers.changeTitle.postMessage("JS调用OC方法")
+        }
+        function reloadView() {
+            window.webkit.messageHandlers.reloadView.postMessage("")
+        }
+        function sendMessage() {
+            window.webkit.messageHandlers.sendMessage.postMessage("这是我发给你的私信，别告诉别人哦")
+        }
+        function showAlert() {
+            alert("我是一个Alert")
+        }
+        function showConfirm() {
+            confirm("这是个confirm？")
+        }
+        function showPrompt() {
+            prompt("你的名字","你想输入点啥")
+        }
+        function injectJS() {
+            window.webkit.messageHandlers.injectJS.postMessage("")
+        }
+    </script>
+</html>
