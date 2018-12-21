@@ -9,5 +9,5 @@ Pod::Spec.new do |s|
     s.framework = "UIKit"
     s.source       = { :git => 'https://github.com/VolientDuan/VDWebView.git', :tag => s.version }
     s.requires_arc = true
-    s.source_files = 'VDWebView/VDWebView/**/**.{h,m}'
+    s.source_files = 'VDWebView/VDWebView/**.{h,m}'
 end
