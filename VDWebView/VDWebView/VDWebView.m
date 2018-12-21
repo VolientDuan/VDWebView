@@ -110,20 +110,20 @@
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if([keyPath isEqualToString:@"estimatedProgress"])
-    {
-//        self.estimatedProgress = [change[NSKeyValueChangeNewKey] floatValue];
-//        // 判断是否显示进度条
-//        if (self.isShowProgressBar) {
-//            self.progressBar.frame = CGRectMake(0, 0, self.bounds.size.width*self.estimatedProgress, self.progressBar.bounds.size.height);
-//            if (self.estimatedProgress == 1) {
-//                self.progressBar.hidden = YES;
-//            }else {
-//                self.progressBar.hidden = NO;
-//            }
-//        }
-    }
-    else if([keyPath isEqualToString:@"title"])
+//    if([keyPath isEqualToString:@"estimatedProgress"])
+//    {
+////        self.estimatedProgress = [change[NSKeyValueChangeNewKey] floatValue];
+////        // 判断是否显示进度条
+////        if (self.isShowProgressBar) {
+////            self.progressBar.frame = CGRectMake(0, 0, self.bounds.size.width*self.estimatedProgress, self.progressBar.bounds.size.height);
+////            if (self.estimatedProgress == 1) {
+////                self.progressBar.hidden = YES;
+////            }else {
+////                self.progressBar.hidden = NO;
+////            }
+////        }
+//    }
+    if([keyPath isEqualToString:@"title"])
     {
         self.title = change[NSKeyValueChangeNewKey];
     }
@@ -566,7 +566,7 @@
     webView.UIDelegate = nil;
     webView.navigationDelegate = nil;
     
-    [webView removeObserver:self forKeyPath:@"estimatedProgress"];
+//    [webView removeObserver:self forKeyPath:@"estimatedProgress"];
     [webView removeObserver:self forKeyPath:@"title"];
     
     // 如果添加JS调用OC的监听 dealloc 一定要移除所有 否则handler将无法释放
