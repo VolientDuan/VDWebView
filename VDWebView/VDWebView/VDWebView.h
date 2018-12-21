@@ -48,7 +48,7 @@ typedef NS_ENUM(NSInteger, VDJSAlertType) {
 @property (nonatomic, readonly) WKWebView *realWebView;
 @property (nonatomic, readonly) NSURLRequest *originRequest;
 ///预估网页加载进度
-//@property (nonatomic, readonly) CGFloat estimatedProgress;
+@property (nonatomic, readonly) CGFloat estimatedProgress;
 // 是否显示进度条 默认不显示
 @property (nonatomic, assign) BOOL isShowProgressBar;
 ///进度条
