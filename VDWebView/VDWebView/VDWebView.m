@@ -41,7 +41,7 @@
 @interface VDWebView()< WKNavigationDelegate,WKUIDelegate>
 
 @property (nonatomic, assign) CGFloat innerHeight;
-@property (nonatomic, assign) CGFloat estimatedProgress;
+@property (nonatomic, assign) CGFloat innerEstimatedProgress;
 @property (nonatomic, strong) NSURLRequest *originRequest;
 @property (nonatomic, strong) NSURLRequest *currentRequest;
 
@@ -112,11 +112,11 @@
 {
     if([keyPath isEqualToString:@"estimatedProgress"])
     {
-        self.estimatedProgress = [change[NSKeyValueChangeNewKey] floatValue];
+        self.innerEstimatedProgress = [change[NSKeyValueChangeNewKey] floatValue];
         // 判断是否显示进度条
         if (self.isShowProgressBar) {
-            self.progressBar.frame = CGRectMake(0, 0, self.bounds.size.width*self.estimatedProgress, self.progressBar.bounds.size.height);
-            if (self.estimatedProgress == 1) {
+            self.progressBar.frame = CGRectMake(0, 0, self.bounds.size.width*self.innerEstimatedProgress, self.progressBar.bounds.size.height);
+            if (self.innerEstimatedProgress == 1) {
                 self.progressBar.hidden = YES;
             }else {
                 self.progressBar.hidden = NO;
