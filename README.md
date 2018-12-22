@@ -1,7 +1,7 @@
-# VDWebView
+[VDWebView的源码和使用示例](https://github.com/VolientDuan/VDWebView)
 
-## VDWebView的目的
-* 在于以最少的成本替代旧项目中的UIWebView
+## VDWebView带来的便捷
+* 以最少的成本替代旧项目中的UIWebView
     * 熟悉的代理方法
     * 常用的基本方法和属性
     * 使用起来更加的熟悉只需把`UIWebView`名更换为`VDWebView`
@@ -101,7 +101,7 @@ pod 'VDWebView', '~> 1.0.0'
 
 #### 已知的循环引用问题
 
-在使用`addScriptMessageHandler:name:`方法注册时传入的这个handler导致了循环引用，如果不调用对应的注销方法就会导致handler这个对象无法被释放，如果你这个handler传入是webView所在的控制器，那么你就要在销毁这个控制器前注销掉你注册的方法.
+在使用`addScriptMessageHandler:name:`方法注册时传入的这个handler被循环引用，如果不调用对应的注销方法就会导致handler这个对象无法被释放，如果你这个handler传入是webView所在的控制器，那么你就要在销毁这个控制器前注销掉你注册的方法.
 
 tip： 如何知道控制器有没有被释放，重写dealloc()，没走此方法说明未被释放
 
@@ -185,7 +185,7 @@ window.webkit.messageHandlers.#OC方法名#.postMessage(#参数#)
 ```
 
 
-## 思考和设计中
+## 后续版本思考和设计中
 * cookie的处理
 * APP和web资源共享问题：比如图片
 * 拦截webView内部请求通过自定义URL的方式进行JS交互
