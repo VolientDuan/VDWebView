@@ -25,6 +25,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.view addSubview:self.webView];
+    self.webView.isShowProgressBar = YES;
     self.webView.enableAllAlert = YES;
     NSString *path = [[NSBundle mainBundle]pathForResource:@"wkweb.html" ofType:nil];
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:path]]];
