@@ -158,6 +158,22 @@
         decisionHandler(WKNavigationActionPolicyCancel);
     }
 }
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
+    if (!self.httpCookiesDisable) {
+        // 同步NSHTTPCookieStorage中的cookie到WKWebView中，有可能会污染WKWebView中的cookie管理
+        // WKWebView有自己的cookie管理
+        NSArray *cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies;
+        for (NSHTTPCookie *cookie in cookies) {
+            if ([navigationResponse.response.URL.host containsString:cookie.domain]) {
+                [self setCookieWithKey:cookie.name value:cookie.value expires:[cookie.expiresDate timeIntervalSinceNow]];
+            }
+        }
+    }
+    NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
+    NSArray *cookies =[NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:response.URL];
+    NSLog(@"cookies:%@",cookies);
+    decisionHandler(WKNavigationResponsePolicyAllow);
+}
 -(void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
 {
     [self callback_webViewDidStartLoad];
@@ -557,6 +573,37 @@
     {
         [invocation invokeWithTarget:self.delegate];
     }
+}
+
+#pragma mark - cookie
+- (void)setCookieWithKey:(NSString *)key value:(NSString *)value expires:(NSTimeInterval)expires {
+    // 其实就是通过注入设置cookie的js代码并在load前执行(iOS11以上也可通过WKHTTPCookieStore进行cookie的设置)
+    NSString *jsSource = [NSString stringWithFormat:@"document.cookie = \"%@=%@\"",key,value];
+    if (expires > 0) {
+        jsSource = [NSString stringWithFormat:@"%@;expires=%lf",jsSource,expires*1000];
+    }
+    [self addUserScriptWithSource:jsSource injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
+
+}
+
+- (NSArray *)getCookies {
+    __block NSArray *cookieArr;
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0
+    if (@available(iOS 11.0, *)) {
+        __block BOOL isExecuted = NO;
+        [self.realWebView.configuration.websiteDataStore.httpCookieStore getAllCookies:^(NSArray<NSHTTPCookie *> * cookies) {
+            cookieArr = cookies;
+            isExecuted = YES;
+        }];
+        while (isExecuted == NO) {
+            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+        }
+        NSLog(@"%@",cookieArr);
+    }
+#else
+    
+#endif
+    return cookieArr;
 }
 
 #pragma mark- 清理

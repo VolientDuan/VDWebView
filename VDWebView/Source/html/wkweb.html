@@ -16,6 +16,9 @@
         <h4 onclick="showPrompt()">prompt显示</h4>
         <h2>注入JS脚本</h2>
         <h4 onclick="injectJS()">这是我注入的JS</h4>
+        <h2>Cookie</h2>
+        <h4 onclick="setCookie()">设置cookie</h4>
+        <h4 onclick="showCookie()">显示cookie</h4>
     </body>
     <script>
         function popView() {
@@ -41,6 +44,13 @@
         }
         function injectJS() {
             window.webkit.messageHandlers.injectJS.postMessage("")
+        }
+        function showCookie() {
+            var cookieStr = new String(document.cookie);
+            alert("获取cookie:"+cookieStr)
+        }
+        function setCookie() {
+            document.cookie = "msg=cookie"
         }
     </script>
 </html>

@@ -42,6 +42,8 @@ typedef NS_ENUM(NSInteger, VDJSAlertType) {
 - (void)webView:(VDWebView *)webView showAlertWithType:(VDJSAlertType)type title:(NSString *)title content:(NSString *)content completionHandler:(void (^)(id))completionHandler;
 @end
 @interface VDWebView : UIView
+
+#pragma mark - VD的基本属性和方法
 @property(nonatomic, assign) id<VDWebViewDelegate> delegate;
 
 ///内部使用的webView
@@ -67,6 +69,7 @@ typedef NS_ENUM(NSInteger, VDJSAlertType) {
 - (NSInteger)countOfHistory;
 - (void)gobackWithStep:(NSInteger)step;
 
+#pragma mark - UI || WK 的API
 ///UI || WK 的API
 @property (nonatomic, readonly) UIScrollView *scrollView;
 
@@ -118,4 +121,21 @@ typedef NS_ENUM(NSInteger, VDJSAlertType) {
  移除所有注入的脚本
  */
 - (void)removeAllUserScripts;
+
+#pragma mark - cookie
+
+/**
+ 不同步NSHTTPCookieStorage存储的cookies 默认同步:NO
+ */
+@property (nonatomic, assign)BOOL httpCookiesDisable;
+/**
+ 设置cookie
+
+ @param key 键
+ @param value 值
+ @param expires 有效时间单位为秒:当值小于等于0时为临时cookie
+ */
+- (void)setCookieWithKey:(NSString *)key value:(NSString *)value expires:(NSTimeInterval)expires;
+- (NSArray *)getCookies;
+
 @end
