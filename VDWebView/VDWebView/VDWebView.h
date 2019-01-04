@@ -134,8 +134,10 @@ typedef NS_ENUM(NSInteger, VDJSAlertType) {
  @param key 键
  @param value 值
  @param expires 有效时间单位为秒:当值小于等于0时为临时cookie
+ @param domain 域名
  */
-- (void)setCookieWithKey:(NSString *)key value:(NSString *)value expires:(NSTimeInterval)expires;
+- (void)setCookieWithKey:(NSString *)key value:(NSString *)value expires:(NSTimeInterval)expires domain:(NSString *)domain;
+- (void)setCookies:(NSString *)cookies;
 - (NSArray *)getCookies;
 
 @end

@@ -12,7 +12,7 @@
 
 ## CocoaPods
 ```
-pod 'VDWebView', '~> 1.0.0'
+pod 'VDWebView', '~> 1.0.1'
 ```
 
 ## 基本描述

@@ -165,13 +165,10 @@
         NSArray *cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies;
         for (NSHTTPCookie *cookie in cookies) {
             if ([navigationResponse.response.URL.host containsString:cookie.domain]) {
-                [self setCookieWithKey:cookie.name value:cookie.value expires:[cookie.expiresDate timeIntervalSinceNow]];
+                [self setCookieWithKey:cookie.name value:cookie.value expires:[cookie.expiresDate timeIntervalSinceNow] domain:cookie.domain];
             }
         }
     }
-    NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
-    NSArray *cookies =[NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:response.URL];
-    NSLog(@"cookies:%@",cookies);
     decisionHandler(WKNavigationResponsePolicyAllow);
 }
 -(void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
@@ -576,12 +573,16 @@
 }
 
 #pragma mark - cookie
-- (void)setCookieWithKey:(NSString *)key value:(NSString *)value expires:(NSTimeInterval)expires {
+- (void)setCookieWithKey:(NSString *)key value:(NSString *)value expires:(NSTimeInterval)expires domain:(NSString *)domain {
     // 其实就是通过注入设置cookie的js代码并在load前执行(iOS11以上也可通过WKHTTPCookieStore进行cookie的设置)
-    NSString *jsSource = [NSString stringWithFormat:@"document.cookie = \"%@=%@\"",key,value];
+    NSString *jsSource = [NSString stringWithFormat:@"document.cookie = \"%@=%@",key,value];
     if (expires > 0) {
         jsSource = [NSString stringWithFormat:@"%@;expires=%lf",jsSource,expires*1000];
     }
+    if (domain) {
+        jsSource = [NSString stringWithFormat:@"%@;domain=%@",jsSource,domain];
+    }
+    jsSource = [NSString stringWithFormat:@"%@;domain=%@\"",jsSource,domain];
     [self addUserScriptWithSource:jsSource injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
 
 }
@@ -598,12 +599,44 @@
         while (isExecuted == NO) {
             [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
         }
-        NSLog(@"%@",cookieArr);
     }
 #else
     
 #endif
     return cookieArr;
+}
+
+- (void)setCookies:(NSString *)cookies {
+    NSString *str = [cookies stringByReplacingOccurrencesOfString:@" " withString:@""];
+    str = [str stringByReplacingOccurrencesOfString:@"Domain=" withString:@"domain="];
+    str = [str stringByReplacingOccurrencesOfString:@"Max-Age=" withString:@"expires="];
+    str = [str stringByReplacingOccurrencesOfString:@"Path=" withString:@"path="];
+    NSArray *array = [str componentsSeparatedByString:@";"];
+    if (array.count > 0) {
+        NSString *key,*value,*domain,*expires,*path;
+        for (NSString *itemStr in array) {
+            NSArray *items = [itemStr componentsSeparatedByString:@"="];
+            if (items.count == 2) {
+                if ([items[0] isEqualToString:@"domain"]) {
+                    domain = items[1];
+                }else if ([items[0] isEqualToString:@"expires"]) {
+                    expires = items[1];
+                }else if ([items[0] isEqualToString:@"path"]) {
+                    path = items[1];
+                }else {
+                    if (key) {
+                        [self setCookieWithKey:key value:value expires:-1 domain:domain];
+                    }
+                    key = items[0];
+                    value = items[1];
+                    domain = nil;
+                }
+            }
+        }
+        if (key) {
+            [self setCookieWithKey:key value:value expires:-1 domain:domain];
+        }
+    }
 }
 
 #pragma mark- 清理
