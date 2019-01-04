@@ -84,7 +84,7 @@ typedef NS_ENUM(NSInteger, VDJSAlertType) {
 @property (nonatomic, readonly) BOOL canGoBack;
 @property (nonatomic, readonly) BOOL canGoForward;
 
-///是否根据视图大小来缩放页面  默认为YES
+///是否根据视图大小来缩放页面  默认为NO
 @property (nonatomic) BOOL scalesPageToFit;
 
 - (id)goBack;

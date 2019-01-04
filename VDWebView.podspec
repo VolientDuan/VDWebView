@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name         = 'VDWebView'
-    s.version      = '1.0.1'
+    s.version      = '1.0.2'
     s.summary      = 'a great webView for iOS'
     s.homepage     = 'https://github.com/VolientDuan/VDWebView'
     s.license      = 'MIT'

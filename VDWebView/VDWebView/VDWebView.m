@@ -83,9 +83,6 @@
 {
     
     [self initWKWebView];
-    
-    self.scalesPageToFit = YES;
-    
     [self.realWebView setFrame:self.bounds];
     [self.realWebView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     [self addSubview:self.realWebView];
