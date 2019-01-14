@@ -212,7 +212,7 @@ self.webView.delegate = self;
 
 与对应的js配套使用，此方案适用于iOS和Android对应的js文件如下
 
-[VDJSWebBridge.js传送门] (https://github.com/VolientDuan/VDWebView/blob/master/VDWebView/Source/html/static/js/VDJSWebBridge.js)
+[VDJSWebBridge.js传送门](https://github.com/VolientDuan/VDWebView/blob/master/VDWebView/Source/html/static/js/VDJSWebBridge.js)
 ```
 // 在js中直接调用VDJSWebBridge.js提供的方法,详情请查看js
 // methodName为控制器中声明的方法名，params为json字符串
