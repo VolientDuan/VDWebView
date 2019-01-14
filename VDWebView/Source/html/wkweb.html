@@ -3,7 +3,7 @@
         <title>测试WKWebView问题</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    </head>
+            </head>
     <body>
         <h2>JS调用OC方法</h2>
         <h4 onclick="popView()">返回上一页</h4>
@@ -19,38 +19,55 @@
         <h2>Cookie</h2>
         <h4 onclick="setCookie()">设置cookie</h4>
         <h4 onclick="showCookie()">显示cookie</h4>
+        <h2>JSBridege测试</h2>
+        <h4 onclick="testJSBridgeToOC()">使用bridge调用OC方法</h4>
+        <h4 onclick="testJSBridgeToJS()">使用bridge调用JS方法</h4>
     </body>
+    <script src="static/js/VDJSWebBridge.js"></script>
     <script>
         function popView() {
             window.webkit.messageHandlers.popView.postMessage({method:"pop"})
         }
-        function changeTitle() {
-            window.webkit.messageHandlers.changeTitle.postMessage("JS调用OC方法")
-        }
-        function reloadView() {
-            window.webkit.messageHandlers.reloadView.postMessage("")
-        }
-        function sendMessage() {
-            window.webkit.messageHandlers.sendMessage.postMessage("这是我发给你的私信，别告诉别人哦")
-        }
-        function showAlert() {
-            alert("我是一个Alert")
-        }
-        function showConfirm() {
-            confirm("这是个confirm？")
-        }
-        function showPrompt() {
-            prompt("你的名字","你想输入点啥")
-        }
-        function injectJS() {
-            window.webkit.messageHandlers.injectJS.postMessage("")
-        }
-        function showCookie() {
-            var cookieStr = new String(document.cookie);
-            alert("获取cookie:"+cookieStr)
-        }
-        function setCookie() {
-            document.cookie = "msg=cookie"
-        }
+    function changeTitle() {
+        window.webkit.messageHandlers.changeTitle.postMessage("JS调用OC方法")
+    }
+    function reloadView() {
+        window.webkit.messageHandlers.reloadView.postMessage("")
+    }
+    function sendMessage() {
+        window.webkit.messageHandlers.sendMessage.postMessage("这是我发给你的私信，别告诉别人哦")
+    }
+    function showAlert() {
+        alert("我是一个Alert")
+    }
+    function showConfirm() {
+        confirm("这是个confirm？")
+    }
+    function showPrompt() {
+        prompt("你的名字","你想输入点啥")
+    }
+    function injectJS() {
+        window.webkit.messageHandlers.injectJS.postMessage("")
+    }
+    function showCookie() {
+        var cookieStr = new String(document.cookie);
+        alert("获取cookie:"+cookieStr)
+    }
+    function setCookie() {
+        document.cookie = "msg=cookie"
+    }
+    function testJSBridgeToOC() {
+        var p = `{"key":"value"}`
+        vd_jsBridge("jsBridgeTest", p)
+    }
+    function testJSBridgeToJS() {
+        var p = `{"method":"jsMethod"}`
+        vd_jsBridge("testJSBridgeToJS", p)
+    }
+    
+    function jsMethod(param1, param2, param3) {
+        alert("使用jsBridge调用js方法成功参数为："+param1+param2+param3)
+        return "success";
+    }
     </script>
 </html>

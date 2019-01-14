@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0702021E21EC807200867C8C /* static in Resources */ = {isa = PBXBuildFile; fileRef = 0702021D21EC807200867C8C /* static */; };
+		072EBB1821E854850086DCDA /* VDWebViewJSBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 072EBB1721E854850086DCDA /* VDWebViewJSBridge.m */; };
+		072EBB1B21E85A730086DCDA /* VDWebViewScriptMessageHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 072EBB1A21E85A730086DCDA /* VDWebViewScriptMessageHandler.m */; };
 		5A94F1A221CCCA11003F92F4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A94F1A121CCCA11003F92F4 /* AppDelegate.m */; };
 		5A94F1A521CCCA11003F92F4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A94F1A421CCCA11003F92F4 /* ViewController.m */; };
 		5A94F1A821CCCA11003F92F4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A94F1A621CCCA11003F92F4 /* Main.storyboard */; };
@@ -38,6 +41,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0702021D21EC807200867C8C /* static */ = {isa = PBXFileReference; lastKnownFileType = folder; name = static; path = ../../../../../code/golang/src/localhost/web/static; sourceTree = "<group>"; };
+		072EBB1521E848380086DCDA /* VDWebViewProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VDWebViewProtocol.h; sourceTree = "<group>"; };
+		072EBB1621E854850086DCDA /* VDWebViewJSBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VDWebViewJSBridge.h; sourceTree = "<group>"; };
+		072EBB1721E854850086DCDA /* VDWebViewJSBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VDWebViewJSBridge.m; sourceTree = "<group>"; };
+		072EBB1921E85A730086DCDA /* VDWebViewScriptMessageHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VDWebViewScriptMessageHandler.h; sourceTree = "<group>"; };
+		072EBB1A21E85A730086DCDA /* VDWebViewScriptMessageHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VDWebViewScriptMessageHandler.m; sourceTree = "<group>"; };
 		5A94F19D21CCCA11003F92F4 /* VDWebView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VDWebView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A94F1A021CCCA11003F92F4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5A94F1A121CCCA11003F92F4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -149,6 +158,11 @@
 			children = (
 				5A94F1D321CCCAAE003F92F4 /* VDWebView.h */,
 				5A94F1D421CCCAAE003F92F4 /* VDWebView.m */,
+				072EBB1521E848380086DCDA /* VDWebViewProtocol.h */,
+				072EBB1921E85A730086DCDA /* VDWebViewScriptMessageHandler.h */,
+				072EBB1A21E85A730086DCDA /* VDWebViewScriptMessageHandler.m */,
+				072EBB1621E854850086DCDA /* VDWebViewJSBridge.h */,
+				072EBB1721E854850086DCDA /* VDWebViewJSBridge.m */,
 			);
 			path = VDWebView;
 			sourceTree = "<group>";
@@ -164,6 +178,7 @@
 		5A94F1DA21CCCC98003F92F4 /* html */ = {
 			isa = PBXGroup;
 			children = (
+				0702021D21EC807200867C8C /* static */,
 				5A94F1DB21CCCC98003F92F4 /* wkweb.html */,
 			);
 			path = html;
@@ -272,6 +287,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0702021E21EC807200867C8C /* static in Resources */,
 				5A94F1AD21CCCA13003F92F4 /* LaunchScreen.storyboard in Resources */,
 				5A94F1DC21CCCC98003F92F4 /* wkweb.html in Resources */,
 				5A94F1AA21CCCA13003F92F4 /* Assets.xcassets in Resources */,
@@ -301,6 +317,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A94F1A521CCCA11003F92F4 /* ViewController.m in Sources */,
+				072EBB1821E854850086DCDA /* VDWebViewJSBridge.m in Sources */,
+				072EBB1B21E85A730086DCDA /* VDWebViewScriptMessageHandler.m in Sources */,
 				5A94F1D821CCCAF2003F92F4 /* WebViewController.m in Sources */,
 				5A94F1D521CCCAAE003F92F4 /* VDWebView.m in Sources */,
 				5A94F1B021CCCA13003F92F4 /* main.m in Sources */,

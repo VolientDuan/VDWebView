@@ -19,18 +19,23 @@
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.whiteColor;
     self.title = @"加载本地html调试";
+    
+    [self.view addSubview:self.webView];
+    self.webView.isShowProgressBar = YES;
+    self.webView.enableAllAlert = YES;
+    [self.webView bridgeInitialized];
+    
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"wkweb.html" ofType:nil];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:path]]];
+//    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:8080"]]];
+    [self addJSHandle];
+    
     // Do any additional setup after loading the view.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.view addSubview:self.webView];
-    self.webView.isShowProgressBar = YES;
-    self.webView.enableAllAlert = YES;
-    NSString *path = [[NSBundle mainBundle]pathForResource:@"wkweb.html" ofType:nil];
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:path]]];
-//    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://h5.ele.me/"]]];
-    [self addJSHandle];
+    
 }
 
 #pragma mark - delegate
@@ -44,7 +49,7 @@
 }
 
 - (BOOL)webView:(VDWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    NSLog(@"should start loading:%@",request.URL.absoluteString);
+    NSLog(@"\nshould start loading:%@",request.URL.absoluteString);
     return YES;
 }
 
@@ -76,6 +81,20 @@
     // reload生效
     [self.webView reload];
 }
+
+#pragma mark - jsBridge
+
+- (void)jsBridgeTest:(NSDictionary *)params {
+    
+    NSLog(@"\njsBridge:%@",params);
+}
+
+- (void)testJSBridgeToJS:(NSDictionary *)params {
+    [self.webView.bridge executeJsMethod:params[@"method"] params:@[@"1",@"2",@"3"] completionHandler:^(id result, NSError *error) {
+        NSLog(@"\njs方法执行h结果回调：%@\n错误信息:%@",result,error);
+    }];
+}
+
 #pragma mark - property
 - (VDWebView *)webView {
     if (!_webView) {
