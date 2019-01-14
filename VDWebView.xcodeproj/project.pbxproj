@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0702021E21EC807200867C8C /* static in Resources */ = {isa = PBXBuildFile; fileRef = 0702021D21EC807200867C8C /* static */; };
+		0702022221EC953B00867C8C /* static in Resources */ = {isa = PBXBuildFile; fileRef = 0702022121EC953B00867C8C /* static */; };
 		072EBB1821E854850086DCDA /* VDWebViewJSBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 072EBB1721E854850086DCDA /* VDWebViewJSBridge.m */; };
 		072EBB1B21E85A730086DCDA /* VDWebViewScriptMessageHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 072EBB1A21E85A730086DCDA /* VDWebViewScriptMessageHandler.m */; };
 		5A94F1A221CCCA11003F92F4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A94F1A121CCCA11003F92F4 /* AppDelegate.m */; };
@@ -41,7 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0702021D21EC807200867C8C /* static */ = {isa = PBXFileReference; lastKnownFileType = folder; name = static; path = ../../../../../code/golang/src/localhost/web/static; sourceTree = "<group>"; };
+		0702022121EC953B00867C8C /* static */ = {isa = PBXFileReference; lastKnownFileType = folder; path = static; sourceTree = "<group>"; };
 		072EBB1521E848380086DCDA /* VDWebViewProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VDWebViewProtocol.h; sourceTree = "<group>"; };
 		072EBB1621E854850086DCDA /* VDWebViewJSBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VDWebViewJSBridge.h; sourceTree = "<group>"; };
 		072EBB1721E854850086DCDA /* VDWebViewJSBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VDWebViewJSBridge.m; sourceTree = "<group>"; };
@@ -178,7 +178,7 @@
 		5A94F1DA21CCCC98003F92F4 /* html */ = {
 			isa = PBXGroup;
 			children = (
-				0702021D21EC807200867C8C /* static */,
+				0702022121EC953B00867C8C /* static */,
 				5A94F1DB21CCCC98003F92F4 /* wkweb.html */,
 			);
 			path = html;
@@ -287,7 +287,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0702021E21EC807200867C8C /* static in Resources */,
+				0702022221EC953B00867C8C /* static in Resources */,
 				5A94F1AD21CCCA13003F92F4 /* LaunchScreen.storyboard in Resources */,
 				5A94F1DC21CCCC98003F92F4 /* wkweb.html in Resources */,
 				5A94F1AA21CCCA13003F92F4 /* Assets.xcassets in Resources */,

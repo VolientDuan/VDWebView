@@ -1,15 +1,18 @@
 [VDWebView的源码和使用示例](https://github.com/VolientDuan/VDWebView)
 
-## VDWebView带来的便捷
+> VDWebView是目前最新、最全和最方便的WebView，可通过pod更新迭代；设计方案为Protocol和Target-Action；有任何问题欢迎指出。
+
+## VDWebView的优势
 * 以最少的成本替代旧项目中的UIWebView
     * 熟悉的代理方法
     * 常用的基本方法和属性
     * 使用起来更加的熟悉只需把`UIWebView`名更换为`VDWebView`
-* 更加方便和安全的JS调用OC方法(后面我会具体说明解决方案)
+* 更加方便和安全的JS与OC方法相互调用(后面我会具体说明解决方案)
     * 支持以target-action的方式替代delegate(两者任意选择)
     * 不会出现类似于使用WKWebView注册OC方法忘记注销导致循环引用无法释放的问题
 * 提供加载进度条的使用、预估进度值的读取等
-
+* cookie的操作
+* iOS和Android通用的JS与OC交互方法(通过请求拦截实现)
 ## CocoaPods
 ```
 pod 'VDWebView', '~> 1.1.0'
@@ -43,20 +46,11 @@ pod 'VDWebView', '~> 1.1.0'
 ```
 /**
  JS调原生代理方法(注册了过的方法将全部通过此方法回调)
-
- @param webView VDWebView
- @param message 回调消息
  */
 - (void)webView:(VDWebView *)webView didReceiveScriptMessage:(WKScriptMessage *)message;
 
 /**
  JS弹框拦截方法--如果需要自定义弹框建议声明此方法
-
- @param webView VDWebView
- @param type 弹框类型
- @param title 标题
- @param content 内容
- @param completionHandler 结果处理必须执行completionHandler(data)
  */
 - (void)webView:(VDWebView *)webView showAlertWithType:(VDJSAlertType)type title:(NSString *)title content:(NSString *)content completionHandler:(void (^)(id))completionHandler;
 ```
@@ -171,10 +165,6 @@ window.webkit.messageHandlers.#OC方法名#.postMessage(#参数#)
 ```
 /**
  注入脚本(js...)
-
- @param source 注入的内容
- @param injectionTime 注入时间
- @param mainFrameOnly 只作用主框架
  */
 - (void)addUserScriptWithSource:(NSString *)source injectionTime:(WKUserScriptInjectionTime)injectionTime forMainFrameOnly:(BOOL)mainFrameOnly;
 
@@ -183,10 +173,33 @@ window.webkit.messageHandlers.#OC方法名#.postMessage(#参数#)
  */
 - (void)removeAllUserScripts;
 ```
+## cookie的处理(待优化)
+
+#### 提供cookie的共享
+由于WKWebView的cookie是和NSHTTPCookieStorage不共享，这就造成使用WKWebView打开的web页面无法获取到通过原生请求登录的cookie，当然其它解决方案有很多种，比如
+* 通过调用URL的拼接把登录信息传递过去
+* 通过js方法传值
+
+但是用了VDWebView就不需要考虑cookie的问题了，因为它已经默认把cookie带过去了，当然你也可以手动去关闭
+
+通过协议`VDWebViewCookiesProtocol`提供相关API和属性
+```
+/**
+ 不同步NSHTTPCookieStorage存储的cookies 默认同步:NO
+ 同步NSHTTPCookieStorage中的cookie到WKWebView中，有可能会污染WKWebView中的cookie管理
+ */
+@property (nonatomic, assign)BOOL httpCookiesDisable;
+/**
+ 设置cookie
+ */
+- (void)setCookieWithKey:(NSString *)key value:(NSString *)value expires:(NSTimeInterval)expires domain:(NSString *)domain;
+- (void)setCookies:(NSString *)cookies;
+- (NSArray *)getCookies;
+```
 
 
 ## 后续版本思考和设计中
-* cookie的处理
+* ~~cookie的处理~~
+* ~~拦截webView内部请求通过自定义URL的方式进行JS交互~~
 * APP和web资源共享问题：比如图片
-* 拦截webView内部请求通过自定义URL的方式进行JS交互
 
