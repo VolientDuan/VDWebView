@@ -196,7 +196,49 @@ window.webkit.messageHandlers.#OC方法名#.postMessage(#参数#)
 - (void)setCookies:(NSString *)cookies;
 - (NSArray *)getCookies;
 ```
+## iOS和Android通用的JS与OC交互方法`VDWebViewJSBridge`
 
+#### 关于使用方法
+
+你只需要调用`VDWebView`继承的协议`VDWebViewProtocol`所提供的初始化方法`bridgeInitialized`即可
+
+```
+// 调用初始化 在webView的控制器中实现同名方法
+self.webView.delegate = self;
+[self.webView bridgeInitialized];
+```
+
+### js调用原生
+
+与对应的js配套使用，此方案适用于iOS和Android对应的js文件如下
+
+[VDJSWebBridge.js传送门] (https://github.com/VolientDuan/VDWebView/blob/master/VDWebView/Source/html/static/js/VDJSWebBridge.js)
+```
+// 在js中直接调用VDJSWebBridge.js提供的方法,详情请查看js
+// methodName为控制器中声明的方法名，params为json字符串
+vd_jsBridge(methodName, params)
+```
+#### 从JS方法触发开始整个调用的过程如下
+1. 对params进行了base64编码
+2. 最终的请求URL格式为 vdjsbridge://methodName?params=base64(params)
+3. APP拦截请求，解析URL匹配scheme(vdjsbridge)，获取方法名，base64解码和json转对象获取参数值
+4. 接受到第三步获取的方法名和参数后通过Target-Action方法调用对应的方法
+
+### OC调用JS方法
+
+```
+// JS 方法
+function jsMethod(param1, param2, param3) {
+        alert("使用jsBridge调用js方法成功参数为："+param1+param2+param3)
+        return "success";
+    }
+
+// OC调用JS方法
+[self.webView.bridge executeJsMethod:@"jsMethod" params:@[@"1",@"2",@"3"] completionHandler:^(id result, NSError *error) {
+        NSLog(@"\njs方法执行h结果回调：%@\n错误信息:%@",result,error);
+    }];
+
+```
 
 ## 后续版本思考和设计中
 * ~~cookie的处理~~
