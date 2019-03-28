@@ -323,7 +323,7 @@
  *  注销 注册过的js回调oc通知方式，适用于 iOS8 之后
  */
 - (void)removeScriptMessageHandler {
-    if (_innerScriptMessageHandler) {
+    if (!_innerScriptMessageHandler) {
         return;
     }
     for (NSString *name in self.innerScriptMessageHandler.scriptMessageNames) {
