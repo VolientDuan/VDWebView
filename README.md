@@ -4,7 +4,7 @@
 
 ## CocoaPods
 ```
-pod 'VDWebView', '~> 1.1.0'
+pod 'VDWebView', '~> 1.1.1'
 ```
 ## 基本描述
 * 封装WebKit所提供的WKWebView，提供熟悉的代理方法(类UIWebViewDelegate)
