@@ -43,6 +43,9 @@ typedef NS_ENUM(NSInteger, VDJSAlertType) {
 @property (nonatomic, assign) BOOL enableConfirm;
 @property (nonatomic, assign) BOOL enablePrompt;
 
+/// JS调用OC方法的的接受对象
+@property (nonatomic, weak) id jsHandler;
+
 - (VDWebViewJSBridge *)bridgeInitialized;
 @property (nonatomic, strong, readonly) VDWebViewJSBridge *bridge;
 

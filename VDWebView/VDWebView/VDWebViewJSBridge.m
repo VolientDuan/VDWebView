@@ -92,6 +92,7 @@
     if (self) {
         self.webView = webView;
         self.delegate = delegate;
+        self.didReceiveScriptMessage = [delegate respondsToSelector:@selector(webView:didReceiveScriptMessage:)];
         self.webView.delegate = nil;
         self.webView.delegate = self;
     }

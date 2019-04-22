@@ -38,6 +38,7 @@
 @synthesize isShowProgressBar;
 @synthesize progressBar = _progressBar;
 @synthesize bridge = _bridge;
+@synthesize jsHandler;
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
@@ -283,8 +284,9 @@
 - (VDWebViewScriptMessageHandler *)innerScriptMessageHandler {
     
     if (!_innerScriptMessageHandler) {
-        
-        _innerScriptMessageHandler = [[VDWebViewScriptMessageHandler alloc]initWithTarget:self selector:@selector(didReceiveScriptMessage:)];
+        if (self.jsHandler) {
+            _innerScriptMessageHandler = [[VDWebViewScriptMessageHandler alloc]initWithTarget:self selector:@selector(didReceiveScriptMessage:)];
+        }
     }
     return _innerScriptMessageHandler;
 }
@@ -332,7 +334,7 @@
 }
 - (void)didReceiveScriptMessage:(WKScriptMessage *)message {
     
-    if ([self.delegate respondsToSelector:@selector(webView:didReceiveScriptMessage:)]) {
+    if ((![self.delegate isKindOfClass:[VDWebViewJSBridge class]] && [self.delegate respondsToSelector:@selector(webView:didReceiveScriptMessage:)]) || ([self.delegate isKindOfClass:[VDWebViewJSBridge class]] && ((VDWebViewJSBridge *)self.delegate).didReceiveScriptMessage)) {
         
         [self.delegate webView:self didReceiveScriptMessage:message];
     }else {

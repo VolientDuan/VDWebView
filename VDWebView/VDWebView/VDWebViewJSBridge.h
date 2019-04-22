@@ -18,6 +18,7 @@
 @property (nonatomic, strong)NSString *scheme;
 @property (nonatomic, weak)VDWebView *webView;
 @property (nonatomic, weak)id<VDWebViewDelegate> delegate;
+@property (nonatomic, assign)BOOL didReceiveScriptMessage;
 /**
  初始化桥，在webView的代理对象绑定后初始化桥，否则会造成桥无法搭建成功
 
