@@ -160,11 +160,10 @@
     [self callback_webViewDidStartLoad];
 }
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    
     [webView evaluateJavaScript:@"document.body.offsetHeight" completionHandler:^(id data, NSError *error) {
         self.innerHeight = [data floatValue];
     }];
-    [self callback_webViewDidFinishLoad];
+    [self performSelector:@selector(callback_webViewDidFinishLoad) withObject:nil afterDelay:0.1];
 }
 - (void)webView:(WKWebView *) webView didFailProvisionalNavigation: (WKNavigation *) navigation withError: (NSError *) error {
     
@@ -529,6 +528,10 @@
     } else {
         _delegate = delegate;
     }
+}
+
+- (CGFloat)contentHeight {
+    return self.innerHeight;
 }
 
 

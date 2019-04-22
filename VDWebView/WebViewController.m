@@ -45,7 +45,7 @@
 }
 
 - (void)webViewDidFinishLoad:(VDWebView *)webView {
-    
+    NSLog(@"%f",webView.contentHeight);
 }
 
 - (BOOL)webView:(VDWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
