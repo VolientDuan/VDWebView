@@ -23,4 +23,5 @@ fi
 echo "add tag and push tag..."
 git tag ${newVersion}
 git push origin master --tags
+pod spec lint VDWebView.podspec --allow-warnings
 pod trunk push VDWebView.podspec --allow-warnings
