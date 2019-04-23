@@ -224,4 +224,10 @@
     }
 }
 
+- (void)webView:(VDWebView *)webView innerHeight:(CGFloat)height {
+    if ([self.delegate respondsToSelector:@selector(webView:innerHeight:)]) {
+        [self.delegate webView:self innerHeight:height];
+    }
+}
+
 @end

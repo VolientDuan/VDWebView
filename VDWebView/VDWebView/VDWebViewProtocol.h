@@ -43,8 +43,8 @@ typedef NS_ENUM(NSInteger, VDJSAlertType) {
 @property (nonatomic, assign) BOOL enableConfirm;
 @property (nonatomic, assign) BOOL enablePrompt;
 
-/// JS调用OC方法的的接受对象
-@property (nonatomic, weak) id jsHandler;
+///// JS调用OC方法的的接受对象
+//@property (nonatomic, weak) id jsHandler;
 
 - (VDWebViewJSBridge *)bridgeInitialized;
 @property (nonatomic, strong, readonly) VDWebViewJSBridge *bridge;
@@ -138,4 +138,13 @@ typedef NS_ENUM(NSInteger, VDJSAlertType) {
  @param completionHandler 结果处理必须执行completionHandler(data)
  */
 - (void)webView:(VDWebView *)webView showAlertWithType:(VDJSAlertType)type title:(NSString *)title content:(NSString *)content completionHandler:(void (^)(id))completionHandler;
+
+/**
+ webView 高度获取
+
+ @param webView VDWebView
+ @param height 内容高度
+ */
+- (void)webView:(VDWebView *)webView innerHeight:(CGFloat)height;
+
 @end

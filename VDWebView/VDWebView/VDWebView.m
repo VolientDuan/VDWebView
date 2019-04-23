@@ -38,7 +38,7 @@
 @synthesize isShowProgressBar;
 @synthesize progressBar = _progressBar;
 @synthesize bridge = _bridge;
-@synthesize jsHandler;
+//@synthesize jsHandler;
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
@@ -163,8 +163,11 @@
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     [webView evaluateJavaScript:@"document.body.offsetHeight" completionHandler:^(id data, NSError *error) {
         self.innerHeight = [data floatValue];
+        if ([self.delegate respondsToSelector:@selector(webView:innerHeight:)]) {
+            [self.delegate webView:self innerHeight:self.innerHeight];
+        }
     }];
-    [self performSelector:@selector(callback_webViewDidFinishLoad) withObject:nil afterDelay:0.1];
+    [self callback_webViewDidFinishLoad];
 }
 - (void)webView:(WKWebView *) webView didFailProvisionalNavigation: (WKNavigation *) navigation withError: (NSError *) error {
     
@@ -284,9 +287,7 @@
 - (VDWebViewScriptMessageHandler *)innerScriptMessageHandler {
     
     if (!_innerScriptMessageHandler) {
-        if (self.jsHandler) {
-            _innerScriptMessageHandler = [[VDWebViewScriptMessageHandler alloc]initWithTarget:self selector:@selector(didReceiveScriptMessage:)];
-        }
+        _innerScriptMessageHandler = [[VDWebViewScriptMessageHandler alloc]initWithTarget:self selector:@selector(didReceiveScriptMessage:)];
     }
     return _innerScriptMessageHandler;
 }

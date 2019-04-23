@@ -53,9 +53,12 @@
     return YES;
 }
 
+- (void)webView:(VDWebView *)webView innerHeight:(CGFloat)height {
+    NSLog(@"innerHeight:%f",height);
+}
+
 #pragma mark - 注册方法
 - (void)addJSHandle {
-    self.webView.jsHandler = self;
     [self.webView addScriptMessageHandler:self name:@"popView"];
     [self.webView addScriptMessageHandler:self name:@"reloadView"];
     [self.webView addScriptMessageHandler:self name:@"changeTitle"];
