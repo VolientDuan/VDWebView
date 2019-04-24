@@ -30,6 +30,11 @@
 //    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:8080"]]];
     [self addJSHandle];
     
+    // test 注入拦截 postMessage 方法
+    [self.webView addUserScriptWithSource:@"function postMessage(msg) { window.webkit.messageHandlers.postMessage.postMessage(msg)}" injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:YES];
+    // reload生效
+    [self.webView reload];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -64,6 +69,8 @@
     [self.webView addScriptMessageHandler:self name:@"changeTitle"];
     [self.webView addScriptMessageHandler:self name:@"sendMessage"];
     [self.webView addScriptMessageHandler:self name:@"injectJS"];
+    
+    [self.webView addScriptMessageHandler:self name:@"postMessage"];
 }
 
 #pragma mark - js->oc的一些方法
@@ -82,8 +89,13 @@
 - (void)injectJS {
     // 注入
     [self.webView addUserScriptWithSource:@"alert(\"简单的注入个Alert\")" injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
+    [self.webView addUserScriptWithSource:@"function postMessage(msg) { window.webkit.messageHandlers.postMessage.postMessage(msg)}" injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:YES];
     // reload生效
     [self.webView reload];
+}
+
+- (void)postMessage:(NSString *)msg {
+    NSLog(@"%@",msg);
 }
 
 #pragma mark - jsBridge

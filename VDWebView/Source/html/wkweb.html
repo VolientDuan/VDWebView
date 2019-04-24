@@ -22,6 +22,8 @@
         <h2>JSBridege测试</h2>
         <h4 onclick="testJSBridgeToOC()">使用bridge调用OC方法</h4>
         <h4 onclick="testJSBridgeToJS()">使用bridge调用JS方法</h4>
+        <h2>JS注入和拦截测试</h2>
+        <h4 onclick="testPostMessage()">JS注入和拦截测试</h4>
     </body>
     <script src="static/js/VDJSWebBridge.js"></script>
     <script>
@@ -68,6 +70,10 @@
     function jsMethod(param1, param2, param3) {
         alert("使用jsBridge调用js方法成功参数为："+param1+param2+param3)
         return "success";
+    }
+    function testPostMessage() {
+        // postMessage 为需要拦截的方法
+        postMessage("这是我发给你的私信，别告诉别人哦")
     }
     </script>
 </html>
