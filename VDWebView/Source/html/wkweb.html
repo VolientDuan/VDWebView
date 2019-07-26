@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
             </head>
-    <body>
+    <body style="font-size: 22px">
         <h2>JS调用OC方法</h2>
         <h4 onclick="popView()">返回上一页</h4>
         <h4 onclick="changeTitle()">更改导航title</h4>
@@ -24,6 +24,10 @@
         <h4 onclick="testJSBridgeToJS()">使用bridge调用JS方法</h4>
         <h2>JS注入和拦截测试</h2>
         <h4 onclick="testPostMessage()">JS注入和拦截测试</h4>
+        <h2>改变字体大小</h2>
+        <h4 onclick="changFontSize(1)">大号</h4>
+        <h4 onclick="changFontSize(2)">中号</h4>
+        <h4 onclick="changFontSize(3)">小号</h4>
     </body>
     <script src="static/js/VDJSWebBridge.js"></script>
     <script>
@@ -74,6 +78,34 @@
     function testPostMessage() {
         // postMessage 为需要拦截的方法
         postMessage("这是我发给你的私信，别告诉别人哦")
+    }
+    var fontSizeType = 2;
+    var fontSizeTo = 2;
+    function changFontSize(type) {
+        if (type == fontSizeType) {
+            return;
+        }
+        fontSizeTo = type;
+        var bodys = document.getElementsByTagName('body');
+        var body = bodys[0];
+        caluteFontSize(body, 0.3);
+        caluteChildren(body);
+        fontSizeType = type;
+    }
+    function caluteChildren(father) {
+        let allNodes = father.children;
+        for (let i = 0; i < allNodes.length; i++) {
+            caluteFontSize(allNodes[i], 0.3);
+            caluteChildren(allNodes[i]);
+        }
+    }
+    function caluteFontSize(child, p) {
+        var fontSizeFloat = parseFloat(window.getComputedStyle(child).fontSize);
+        if (fontSizeFloat != NaN && fontSizeFloat > 0) {
+            let a = 1.0 + (2 - fontSizeTo)*p;
+            let b = 1.0 + (2 - fontSizeType)*p;
+            child.style.fontSize = fontSizeFloat * (a/b) + 'px';
+        }
     }
     </script>
 </html>
