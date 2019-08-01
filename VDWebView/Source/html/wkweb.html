@@ -5,8 +5,8 @@
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
             </head>
     <body style="font-size: 22px">
-        <h2>JS调用OC方法</h2>
-        <h4 onclick="popView()">返回上一页</h4>
+        <h2 id="header">JS调用OC方法</h2>
+        <h4 class="des" onclick="popView()">返回上一页</h4>
         <h4 onclick="changeTitle()">更改导航title</h4>
         <h4 onclick="reloadView()">reload页面</h4>
         <h4 onclick="sendMessage()">给我一封私信</h4>
@@ -29,6 +29,14 @@
         <h4 onclick="changFontSize(2)">中号</h4>
         <h4 onclick="changFontSize(3)">小号</h4>
     </body>
+    <style>
+        .title {
+            font-family: 'Noto Serif CJK SC', 'Noto Serif CJK', 'Source Han Serif SC', ‘Source Han Serif’, source-han-serif-sc, serif;
+        }
+    .des {
+        font-size: 10px;
+    }
+    </style>
     <script src="static/js/VDJSWebBridge.js"></script>
     <script>
         function popView() {
@@ -93,6 +101,10 @@
         fontSizeType = type;
     }
     function caluteChildren(father) {
+        let className = father.className;
+        if (className == "des") {
+            return;
+        }
         let allNodes = father.children;
         for (let i = 0; i < allNodes.length; i++) {
             caluteFontSize(allNodes[i], 0.3);
@@ -100,6 +112,10 @@
         }
     }
     function caluteFontSize(child, p) {
+        let className = child.className;
+        if (className == "des") {
+            return;
+        }
         var fontSizeFloat = parseFloat(window.getComputedStyle(child).fontSize);
         if (fontSizeFloat != NaN && fontSizeFloat > 0) {
             let a = 1.0 + (2 - fontSizeTo)*p;
@@ -107,5 +123,31 @@
             child.style.fontSize = fontSizeFloat * (a/b) + 'px';
         }
     }
-    </script>
+    function setCustomFont() {
+        var bodys = document.getElementsByTagName('body');
+        var body = bodys[0];
+        body.style.fontFamily = "'Noto Serif CJK SC', 'Noto Serif CJK', 'Source Han Serif SC', ‘Source Han Serif’, source-han-serif-sc, serif";
+        setCustomSubFont(body)
+    }
+    
+    function setCustomSubFont(father) {
+        let allNodes = father.children;
+        for (let i = 0; i < allNodes.length; i++) {
+            let idName = allNodes[i].id;
+            if (idName == "header") {
+                allNodes[i].style.fontSize = '18px';
+            } else {
+                let className = allNodes[i].className;
+                if (className == "des") {
+                    allNodes[i].style.fontSize = '14px';
+                } else {
+                    allNodes[i].style.fontSize = '15px';
+                    setCustomSubFont(allNodes[i]);
+                }
+            }
+        }
+    }
+    setCustomFont()
+    
+        </script>
 </html>
